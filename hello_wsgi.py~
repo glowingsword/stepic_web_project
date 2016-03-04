@@ -1,0 +1,7 @@
+from cgi import parse_qs
+
+def my_app(environ, start_response):
+    query_string = environ['QUERY_STRING']
+    get_params = qs.split('&')
+    start_response('200 OK', [('Content-type','text/plain')])
+    return  ["\r\n".join(get_params)]
