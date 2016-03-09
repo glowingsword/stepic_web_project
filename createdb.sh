@@ -3,4 +3,5 @@
 mysql -uroot -e 'create database ask;'
 mysql -uroot -e 'CREATE USER 'ask'@'localhost' IDENTIFIED BY 'Jocho4Za';'
 mysql -uroot -e "CREATE USER 'ask'@'localhost' IDENTIFIED BY 'Jocho4Za';"
-mysql -uroot -e "GRANT ALL ON ask.* TO 'ask'@'local
+mysql -uroot -e "GRANT ALL ON ask.* TO 'ask'@'local;"
+mysql -uroot -e "FLUSH PRIVILEGES;"
