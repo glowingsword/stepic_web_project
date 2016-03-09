@@ -7,10 +7,10 @@ from django.http import Http404, HttpResponseRedirect
 from django.http import HttpResponse 
 
 def test(request, *args, **kwargs):
-    return HttpResponse('OK')
-
+    #return HttpResponse('OK')
+    return render(request,'index2.html')
 def page404(request, *args, **kwargs):
     raise Http404
 
 def question(request, id):
-   return HttpResponse('Hello %s!' % id)
+   return render(request,'index.html',{'id': id,})

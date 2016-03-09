@@ -1,13 +1,12 @@
-#! /bin/bash
+#!/usr/bin/env bash
 
-easy_install -m
-rm -rf /usr/lib/python2.7/dist-packages/Django-1.6.1.egg-info
-rm -rf /usr/lib/python2.7/dist-packages/django
+apt-get remove python-django
+apt-get install python-mysqldb
 
 pip install --upgrade Django
-echo 'Python version'
+echo 'Django version'
 python -c "import django; print(django.get_version())"
-echo 'Python path'
+echo 'Django installation path'
 python -c "import django; print(django.__path__)"
 
 rm -f /etc/nginx/sites-enabled/default 
