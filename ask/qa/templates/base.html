@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>{% block title %}Ask guru{% endblock %}</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">
+
+  </head>
+  <body>
+
+
+  <nav class="navbar navbar-default">
+  <div class="container">
+    <div class="navbar-header">
+      <!-- The mobile navbar-toggle button can be safely removed since you do not need it in a non-responsive implementation -->
+      <a class="navbar-brand" href="/">Ask Pupkin</a>
+    </div>
+    <!-- Note that the .navbar-collapse and .collapse classes have been removed from the #navbar -->
+    <div id="navbar">
+      <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+          <input type="text" class="form-control" placeholder="Search">
+        </div>
+        <button type="submit" class="btn btn-default">Ask!</button>
+      </form>
+    </div><!--/.nav-collapse -->
+  </div>
+</nav>
+
+
+<div class="container theme-showcase" role="main">
+  <div class="row">
+    <div class="col-sm-8 blog-main">
+      {% block content %}
+      {% endblock %}
+    </div><!-- /.blog-main -->
+
+    <div class="col-sm-3 col-sm-offset-1 blog-sidebar">
+      <div class="sidebar-module sidebar-module-inset">
+        <div class="sidebar-module">
+            <h2>Popular tags</h2>
+            <ol class="list-unstyled">
+              <li><a href="#">GitHub</a></li>
+              <li><a href="#">Twitter</a></li>
+              <li><a href="#">Facebook</a></li>
+            </ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+  </body>
+</html>
