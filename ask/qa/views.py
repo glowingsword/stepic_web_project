@@ -70,8 +70,10 @@ def question_details(request, id):
       return answer_add(request)
     question = get_object_or_404(Question, id=id)
     answers = question.answer_set.all()
+    answer_form = AnswerForm(initial = {'question': question, 'author': request.user})
     return render(request, 'questions/question_details.html', {
         'question': question,
+        'form': answer_form,
         'answers': answers,
     })
 
