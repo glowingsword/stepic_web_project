@@ -1,7 +1,30 @@
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
+from django.contrib.auth.decorators import login_required
 from .models import Question
+
+def ask_view(request):
+  if request.method == 'POST':
+    form = AskForm(request.POST)
+    form.author = request.user
+    if form.is_valid():
+      question = Question.objects.create(author=form.author,
+                                         title = form.cleaned_data['title'],
+                                         text = form.cleaned_data['text'])
+      url = question.get_url()
+      return HttpResponseRedirect(url)
+  else:
+    form = AskForm(initial = {'author': request.user})
+  return render(request, 'questions/ask_form.html', { 'form': form })
+
+def answer_add(request):
+  form = AnswerForm(request.POST)
+  if form.is_valid():
+    answer = form.save()
+    url = answer.get_url()
+    return HttpResponseRedirect(url)
+  raise Http404
 
 def pagination(request,questions,baseurl):
   try:
@@ -43,8 +66,10 @@ def questions_list_popular(request):
     })
 
 def question_details(request, id):
+    if request.method == 'POST':
+      return answer_add(request)
     question = get_object_or_404(Question, id=id)
-    answers = question.answers.all()
+    answers = question.answer_set.all()
     return render(request, 'questions/question_details.html', {
         'question': question,
         'answers': answers,
