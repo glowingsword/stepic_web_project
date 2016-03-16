@@ -3,6 +3,9 @@ from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
 from .models import Question
+from .models import Answer
+from .forms import AskForm
+from .forms import AnswerForm
 
 def ask_view(request):
   if request.method == 'POST':
