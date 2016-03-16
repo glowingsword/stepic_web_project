@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
-apt-get remove python-django
-apt-get install python-mysqldb
+#apt-get remove python-django
+#apt-get install python-mysqldb
 
 #pip install --upgrade Django
 #echo 'Django version'

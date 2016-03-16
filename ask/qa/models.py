@@ -22,7 +22,7 @@ class Question(models.Model):
 class Answer(models.Model):
   text = models.TextField()
   added_at = models.DateTimeField(default=timezone.now)
-  question = models.ForeignKey(Question)
+  question = models.ForeignKey(Question,null=True)
   author = models.ForeignKey(User, null=True)
   class Meta:
     ordering = ('added_at',)
