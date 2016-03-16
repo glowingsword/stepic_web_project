@@ -3,11 +3,11 @@
 apt-get remove python-django
 apt-get install python-mysqldb
 
-pip install --upgrade Django
-echo 'Django version'
-python -c "import django; print(django.get_version())"
-echo 'Django installation path'
-python -c "import django; print(django.__path__)"
+#pip install --upgrade Django
+#echo 'Django version'
+#python -c "import django; print(django.get_version())"
+#echo 'Django installation path'
+#python -c "import django; print(django.__path__)"
 
 rm -f /etc/nginx/sites-enabled/default 
 ln -sf /home/box/web/etc/nginx.conf  /etc/nginx/sites-enabled/test.conf
