@@ -9,15 +9,15 @@ class Question(models.Model):
   title = models.CharField(max_length=255)
   text = models.TextField()
   added_at = models.DateTimeField(default=timezone.now)
-  rating = models.IntegerField(blank=True)
+  rating = models.IntegerField(default=0)
   author = models.ForeignKey(User, blank=True)
   likes = models.ManyToManyField(User, related_name="question_likes", blank=True)
   class Meta:
     ordering = ('added_at',)
-    def __unicode__(self):
-      return self.title
-    def get_url(self):
-      return '/question/%s/' % self.id
+  def __unicode__(self):
+    return self.title
+  def get_absolute_url(self):
+    return '/question/%s/' % self.id
 
 class Answer(models.Model):
   text = models.TextField()
@@ -26,7 +26,7 @@ class Answer(models.Model):
   author = models.ForeignKey(User, null=True)
   class Meta:
     ordering = ('added_at',)
-    def __unicode__(self):
-      return self.title
-    def get_url(self):
-      return '/question/%s/' % self.id
+  def __unicode__(self):
+    return self.title
+  def get_absolute_url(self):
+    return '/question/%s/' % self.id
