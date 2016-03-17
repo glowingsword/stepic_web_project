@@ -24,8 +24,9 @@ class AskForm(forms.Form):
         return text
 
     def save(self):
-        self.cleaned_data['author_id'] = 1
+        #self.cleaned_data['author_id'] = 1
         ask = Question(**self.cleaned_data)
+        question.author = self._user
         ask.save()
         return ask
 
@@ -50,8 +51,9 @@ class AnswerForm(forms.Form):
     def save(self):
         self.cleaned_data['question'] = get_object_or_404(
             Question, pk=self.cleaned_data['question'])
-        self.cleaned_data['author_id'] = 1
+        #self.cleaned_data['author_id'] = 1
         answer = Answer(**self.cleaned_data)
+        question.author = self._user
         answer.save()
         return answer
 

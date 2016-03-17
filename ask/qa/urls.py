@@ -4,11 +4,11 @@ from django.contrib import admin
 
 urlpatterns = patterns('',
    url(r'^$', questions_list_all, name='questions_list_all'),
+   url(r'^login/', login, name='login'),
+   url(r'^signup/', signup, name='signup'),
    url(r'^question/(?P<id>\d+)/', question_details, name='question_details'),
    url(r'^popular/$', questions_list_popular, name='questions_list_popular'),
    url(r'^ask/', ask_view, name='ask_view'),
    url(r'^answer/', answer_add, name='answer_add'),
    url(r'^new/', test, name='new'),
-   url(r'^login/', test, name='login'),
-   url(r'^signup/', test, name='signup'),
 )

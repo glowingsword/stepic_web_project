@@ -2,7 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
 from django.core.urlresolvers import reverse
 from .models import Question
 from .models import Answer
@@ -83,7 +83,7 @@ def question_details(request, id):
         'answers': answers,
     })
 
-def sign_up(request):
+def signup(request):
     if request.method == "POST":
         form = SignUpForm(request.POST)
         if form.is_valid():
@@ -91,8 +91,8 @@ def sign_up(request):
             password = request.POST['password']
             form.save()
             user = authenticate(username=username, password=password)
-            login(request, user)
-            return HttpResponseRedirect(reverse('homepage'))
+            auth_login(request, user)
+            return HttpResponseRedirect('/')
     else:
         form = SignUpForm()
     return render(request, 'questions/signup.html', {
@@ -106,8 +106,8 @@ def login(request):
             username = request.POST['username']
             password = request.POST['password']
             user = authenticate(username=username, password=password)
-            login(request, user)
-            return HttpResponseRedirect(reverse('homepage'))
+            auth_login(request, user)
+            return HttpResponseRedirect('/')
     else:
         form = LoginForm()
     return render(request, 'questions/login.html', {
