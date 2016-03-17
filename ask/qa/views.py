@@ -15,7 +15,7 @@ from .forms import LoginForm
 def ask_view(request):
   if request.method == 'POST':
     form = AskForm(request.POST)
-    form.author = request.user
+    form._user = request.user
     if form.is_valid():
       ask = form.save()
       url = reverse('question_details', args=[ask.id])
