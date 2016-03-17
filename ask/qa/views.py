@@ -2,6 +2,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
+from django.core.urlresolvers import reverse
 from .models import Question
 from .models import Answer
 from .forms import AskForm
@@ -10,24 +11,22 @@ from .forms import AnswerForm
 def ask_view(request):
   if request.method == 'POST':
     form = AskForm(request.POST)
-    form.author = request.user
+    #form.author = request.user
     if form.is_valid():
-      question = Question.objects.create(author=form.author,
-                                         title = form.cleaned_data['title'],
-                                         text = form.cleaned_data['text'])
-      url = question.get_url()
+      ask = form.save()
+      url = reverse('question_details', args=[ask.id])
       return HttpResponseRedirect(url)
   else:
-    form = AskForm(initial = {'author': request.user})
+    form = AskForm()
   return render(request, 'questions/ask_form.html', { 'form': form })
 
 def answer_add(request):
   form = AnswerForm(request.POST)
   if form.is_valid():
     answer = form.save()
-    url = answer.get_url()
+    url = reverse('question_detail', args=[answer.question.id])
     return HttpResponseRedirect(url)
-  raise Http404
+  return HttpResponseRedirect('/')
 
 def pagination(request,questions,baseurl):
   try:
