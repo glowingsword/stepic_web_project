@@ -15,7 +15,7 @@ from .forms import LoginForm
 def ask_view(request):
   if request.method == 'POST':
     form = AskForm(request.POST)
-    #form.author = request.user
+    form.author = request.user
     if form.is_valid():
       ask = form.save()
       url = reverse('question_details', args=[ask.id])
@@ -72,16 +72,26 @@ def questions_list_popular(request):
     })
 
 def question_details(request, id):
-    #if request.method == 'POST':
-    #  return answer_add(request)
-    question = get_object_or_404(Question, id=id)
+  try:
+    question = Question.objects.get(id=id)
     answers = question.answer_set.all()
-    answer_form = AnswerForm(initial = {'question': question, 'author': request.user})
-    return render(request, 'questions/question_details.html', {
-        'question': question,
-        'form': answer_form,
-        'answers': answers,
-    })
+    if request.method == "POST":
+      form = AnswerForm(request.POST)
+      form._user = request.user
+      if form.is_valid():
+        answer = form.save()
+        url = question.get_url()
+        return HttpResponseRedirect(url)
+    else:
+      answer_form = AnswerForm(initial = {'question': question, 'author': request.user})
+  except Question.DoesNotExist:
+    raise Http404
+
+  return render(request, 'questions/question_details.html', {
+    'question': question,
+    'form': answer_form,
+    'answers': answers,
+  })
 
 def signup(request):
     if request.method == "POST":
