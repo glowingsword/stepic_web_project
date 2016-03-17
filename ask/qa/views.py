@@ -2,11 +2,15 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, Http404, HttpResponseRedirect
 from django.core.paginator import Paginator, EmptyPage
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth import authenticate, login
 from django.core.urlresolvers import reverse
 from .models import Question
 from .models import Answer
 from .forms import AskForm
 from .forms import AnswerForm
+from .forms import SignUpForm
+from .forms import LoginForm
+
 
 def ask_view(request):
   if request.method == 'POST':
@@ -68,8 +72,8 @@ def questions_list_popular(request):
     })
 
 def question_details(request, id):
-    if request.method == 'POST':
-      return answer_add(request)
+    #if request.method == 'POST':
+    #  return answer_add(request)
     question = get_object_or_404(Question, id=id)
     answers = question.answer_set.all()
     answer_form = AnswerForm(initial = {'question': question, 'author': request.user})
@@ -77,6 +81,37 @@ def question_details(request, id):
         'question': question,
         'form': answer_form,
         'answers': answers,
+    })
+
+def sign_up(request):
+    if request.method == "POST":
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            form.save()
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return HttpResponseRedirect(reverse('homepage'))
+    else:
+        form = SignUpForm()
+    return render(request, 'questions/signup.html', {
+        'form': form
+    })
+
+def login(request):
+    if request.method == "POST":
+        form = LoginForm(request.POST)
+        if form.is_valid():
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(username=username, password=password)
+            login(request, user)
+            return HttpResponseRedirect(reverse('homepage'))
+    else:
+        form = LoginForm()
+    return render(request, 'questions/login.html', {
+        'form': form
     })
 
 def test(request, *args, **kwargs):

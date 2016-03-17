@@ -1,8 +1,10 @@
 from django.shortcuts import get_object_or_404
 from django import forms
 from django.forms import ModelForm
+from django.contrib.auth.models import User
 from .models import Question
 from .models import Answer
+
 
 
 class AskForm(forms.Form):
@@ -52,3 +54,17 @@ class AnswerForm(forms.Form):
         answer = Answer(**self.cleaned_data)
         answer.save()
         return answer
+
+class SignUpForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    email = forms.EmailField(max_length=100)
+    password = forms.CharField(max_length=100)
+
+    def save(self):
+        user = User.objects.create_user(**self.cleaned_data)
+        user.save()
+        return user
+
+class LoginForm(forms.Form):
+    username = forms.CharField(max_length=100)
+    password = forms.CharField(max_length=100)
